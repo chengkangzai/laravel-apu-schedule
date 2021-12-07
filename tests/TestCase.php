@@ -2,9 +2,9 @@
 
 namespace Chengkangzai\ApuSchedule\Tests;
 
+use Chengkangzai\ApuSchedule\ApuScheduleServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Chengkangzai\ApuSchedule\ApuScheduleServiceProvider;
 
 class TestCase extends Orchestra
 {

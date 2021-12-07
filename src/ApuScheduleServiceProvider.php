@@ -2,9 +2,9 @@
 
 namespace Chengkangzai\ApuSchedule;
 
+use Chengkangzai\ApuSchedule\Commands\ApuScheduleCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Chengkangzai\ApuSchedule\Commands\ApuScheduleCommand;
 
 class ApuScheduleServiceProvider extends PackageServiceProvider
 {
