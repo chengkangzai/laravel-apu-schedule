@@ -4,7 +4,6 @@ namespace Chengkangzai\ApuSchedule;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Chengkangzai\ApuSchedule\Commands\ApuScheduleCommand;
 
 class ApuScheduleServiceProvider extends PackageServiceProvider
 {
@@ -16,10 +15,6 @@ class ApuScheduleServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('laravel-apu-schedule')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-apu-schedule_table')
-            ->hasCommand(ApuScheduleCommand::class);
+            ->name('laravel-apu-schedule');
     }
 }

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Facade;
  */
 class ApuSchedule extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'laravel-apu-schedule';
+        return \Chengkangzai\ApuSchedule\ApuSchedule::class;
     }
 }

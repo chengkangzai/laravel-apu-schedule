@@ -17,8 +17,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^8.73"
+        "guzzlehttp/guzzle": "^7.4",
+        "illuminate/contracts": "^8.73",
+        "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.10",
@@ -30,8 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Chengkangzai\\ApuSchedule\\": "src",
-            "Chengkangzai\\ApuSchedule\\Database\\Factories\\": "database/factories"
+            "Chengkangzai\\ApuSchedule\\": "src"
         }
     },
     "autoload-dev": {
@@ -53,7 +53,7 @@
                 "Chengkangzai\\ApuSchedule\\ApuScheduleServiceProvider"
             ],
             "aliases": {
-                "ApuSchedule": "Chengkangzai\\ApuSchedule\\Facades\\ApuSchedule"
+                "ApuSchedule": "Chengkangzai\\ApuSchedule\\ApuSchedule"
             }
         }
     },
