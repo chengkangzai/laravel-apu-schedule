@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Chengkangzai\ApuSchedule\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ApuScheduleCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-apu-schedule';
 
     public $description = 'My command';
 
