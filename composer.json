@@ -1,6 +1,6 @@
 {
     "name": "chengkangzai/laravel-apu-schedule",
-    "description": "This is my package laravel-apu-schedule",
+    "description": "This package will find APU schedule from the open data of APU.",
     "keywords": [
         "chengkangzai",
         "laravel",
