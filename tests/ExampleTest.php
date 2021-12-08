@@ -9,7 +9,7 @@ it('can fetch from S3', function () {
 });
 
 it('can get grouping', function () {
-    $collection = APUSchedule::getAllGroupings();
+    $collection = APUSchedule::getGroupings();
     expect($collection)->toBeCollection();
     expect($collection)->not->toBeEmpty();
 });
@@ -22,14 +22,14 @@ it('can get intake', function () {
 
 it('can get grouping by intake', function () {
     $intakes = APUSchedule::getAllIntakes()->random();
-    $collection = ApuSchedule::getAllGroupings($intakes);
+    $collection = ApuSchedule::getGroupings($intakes);
     expect($collection)->toBeCollection();
     expect($collection)->not->toBeEmpty();
 });
 
 it('can get timetable base on intake and grouping', function () {
     $intakes = APUSchedule::getAllIntakes()->random();
-    $grouping = ApuSchedule::getAllGroupings($intakes)->random();
+    $grouping = ApuSchedule::getGroupings($intakes)->random();
     $collection = ApuSchedule::getSchedule($intakes, $grouping);
     expect($collection)->toBeCollection();
     expect($collection)->not->toBeEmpty();

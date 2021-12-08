@@ -14,7 +14,7 @@ class ApuSchedule
         return self::get()->pluck('INTAKE')->unique()->sort();
     }
 
-    public static function getAllGroupings($intake = null): Collection
+    public static function getGroupings($intake = null): Collection
     {
         if ($intake) {
             return self::get()->where('INTAKE', $intake)->sort()->pluck('GROUPING')->unique();
