@@ -9,7 +9,7 @@ class ApuSchedule
 {
     public const baseUrl = 'https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable';
 
-    public static function getAllIntakes(): Collection
+    public static function getIntakes(): Collection
     {
         return self::get()->pluck('INTAKE')->unique()->sort();
     }
