@@ -18,13 +18,15 @@ composer require chengkangzai/laravel-apu-schedule
 ## Usage
 
 ## Get all the intake code
+
 ```php
 use Chengkangzai\ApuSchedule\ApuSchedule;
 
-$intakes = ApuSchedule::getAllIntakes(); // UC3F2111SE, AFCF2011AS ... 
+$intakes = ApuSchedule::getIntakes(); // UC3F2111SE, AFCF2011AS ... 
 ```
 
-## Get all the grouping by intake code 
+## Get all the grouping by intake code
+
 ```php
 use Chengkangzai\ApuSchedule\ApuSchedule;
 
@@ -32,36 +34,42 @@ ApuSchedule::getGroupings("UC3F2111SE"); // G1,G2,G3
 ```
 
 ## Get schedule of specific intake and grouping
+
 ```php
 use Chengkangzai\ApuSchedule\ApuSchedule;
 
 ApuSchedule::getSchedule("UC3F2111SE","G1"); 
 
 ```
+
 <details><summary>Example Output</summary>
 
 ```json
-[{
-   "INTAKE":"...",
-   "MODID":"...",
-   "MODULE_NAME":"...",
-   "DAY":"...",
-   "LOCATION":"...",
-   "ROOM":"...",
-   "LECTID":"...",
-   "NAME":"...",
-   "SAMACCOUNTNAME":"...",
-   "DATESTAMP":"...",
-   "DATESTAMP_ISO":"...",
-   "TIME_FROM":"...",
-   "TIME_TO":"...",
-   "TIME_FROM_ISO":"...",
-   "TIME_TO_ISO":"...",
-   "GROUPING":"...",
-   "CLASS_CODE":"...",
-   "COLOR":"...",
-},{}]
+[
+    {
+        "INTAKE": "...",
+        "MODID": "...",
+        "MODULE_NAME": "...",
+        "DAY": "...",
+        "LOCATION": "...",
+        "ROOM": "...",
+        "LECTID": "...",
+        "NAME": "...",
+        "SAMACCOUNTNAME": "...",
+        "DATESTAMP": "...",
+        "DATESTAMP_ISO": "...",
+        "TIME_FROM": "...",
+        "TIME_TO": "...",
+        "TIME_FROM_ISO": "...",
+        "TIME_TO_ISO": "...",
+        "GROUPING": "...",
+        "CLASS_CODE": "...",
+        "COLOR": "..."
+    },
+    {}
+]
 ```
+
 </details>
 
 ## Testing
