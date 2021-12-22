@@ -14,13 +14,14 @@ class ApuSchedule
         return self::get()->pluck('INTAKE')->unique()->sort();
     }
 
-    public static function getGroupings($intake = null): Collection
+    public static function getGroupings($intake): Collection
     {
-        if ($intake) {
-            return self::get()->where('INTAKE', $intake)->sort()->pluck('GROUPING')->unique();
-        }
+        return self::get()->where('INTAKE', $intake)->sort()->pluck('GROUPING')->unique();
+    }
 
-        return self::get()->pluck('GROUPING')->unique();
+    public static function getMODID($intake, $grouping): Collection
+    {
+        return self::get()->where('INTAKE', $intake)->where('GROUPING', $grouping)->pluck('MODID');
     }
 
     public static function getByIntake($intake): Collection
@@ -28,9 +29,19 @@ class ApuSchedule
         return self::get()->where('INTAKE', $intake);
     }
 
-    public static function getSchedule($intake, $grouping): Collection
+    /*
+     * Get the schedule for a given intake and grouping
+     * @param string $intake
+     * @param string $grouping
+     * @param array $ignore - optional, if set, ignore this course. It must be exactly the same with MODID
+     * @return Collection
+     */
+    public static function getSchedule($intake, $grouping, $ignore = []): Collection
     {
-        return self::get()->where('INTAKE', $intake)->where('GROUPING', $grouping);
+        return self::get()
+            ->where('INTAKE', $intake)
+            ->where('GROUPING', $grouping)
+            ->filter(fn($schedule) => !in_array($schedule->MODID, $ignore));
     }
 
     public static function get(): Collection

@@ -9,7 +9,8 @@ it('can fetch from S3', function () {
 });
 
 it('can get grouping', function () {
-    $collection = APUSchedule::getGroupings();
+    $intake = APUSchedule::getIntakes()->random();
+    $collection = APUSchedule::getGroupings($intake);
     expect($collection)->toBeCollection();
     expect($collection)->not->toBeEmpty();
 });
@@ -33,4 +34,19 @@ it('can get timetable base on intake and grouping', function () {
     $collection = ApuSchedule::getSchedule($intakes, $grouping);
     expect($collection)->toBeCollection();
     expect($collection)->not->toBeEmpty();
+});
+
+it('can get timetable base on intake and grouping with ignore ', function () {
+    $intakes = APUSchedule::getIntakes()->random();
+    $grouping = ApuSchedule::getGroupings($intakes)->random();
+    $MODID = ApuSchedule::getSchedule($intakes, $grouping)->random()->MODID;
+    $scheduleWFilter = ApuSchedule::getSchedule($intakes, $grouping, [$MODID]);
+    expect($scheduleWFilter)->toBeCollection();
+    expect($scheduleWFilter)->not->toBeEmpty();
+
+    $scheduleWOFilter = ApuSchedule::getSchedule($intakes, $grouping);
+    expect($scheduleWOFilter)->toBeCollection();
+    expect($scheduleWOFilter)->not->toBeEmpty();
+
+    expect($scheduleWFilter->count())->toBeLessThan($scheduleWOFilter->count());
 });
