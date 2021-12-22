@@ -41,7 +41,7 @@ class ApuSchedule
         return self::get()
             ->where('INTAKE', $intake)
             ->where('GROUPING', $grouping)
-            ->filter(fn($schedule) => !in_array($schedule->MODID, $ignore));
+            ->filter(fn ($schedule) => ! in_array($schedule->MODID, $ignore));
     }
 
     public static function get(): Collection
