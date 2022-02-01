@@ -5,9 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/chengkangzai/laravel-apu-schedule/Check%20&%20fix%20styling?label=code%20style)](https://github.com/chengkangzai/laravel-apu-schedule/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/chengkangzai/laravel-apu-schedule.svg?style=flat-square)](https://packagist.org/packages/chengkangzai/laravel-apu-schedule)
 
+![Pakcage Banners](https://banners.beyondco.de/Laravel%20Apu%20Schedule.png?theme=light&packageManager=composer+require&packageName=chengkangzai%2Flaravel-apu-schedule&pattern=ticTacToe&style=style_1&description=query+student%27s+timetable+from+APU&md=1&showWatermark=1&fontSize=100px&images=academic-cap)
 
-
-This laravel package provide simple API to get all and query the student's timetable information from [Asia Pacific University(APU)](https://apu.edu.my/).
+This package provide simple API to get all and query the student's timetable information from [Asia Pacific University(APU)](https://apu.edu.my/).
 
 ## Installation
 
