@@ -50,3 +50,11 @@ it('can get timetable base on intake and grouping with ignore ', function () {
 
     expect($scheduleWFilter->count())->toBeLessThan($scheduleWOFilter->count());
 });
+
+it('can get time table by intake', function () {
+    $intakes = APUSchedule::getIntakes()->random();
+    $grouping = ApuSchedule::getGroupings($intakes)->random();
+    $collection = ApuSchedule::getSchedule($intakes, $grouping);
+    expect($collection)->toBeCollection();
+    expect($collection)->not->toBeEmpty();
+});
