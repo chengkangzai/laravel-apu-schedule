@@ -72,7 +72,6 @@ it('can get timetable base on intake and grouping with ignore ', function () {
     expect($scheduleWOFilter)->toBeCollection()
         ->and($scheduleWOFilter)->not->toBeEmpty()
         ->and($scheduleWFilter->count())->toBeLessThan($scheduleWOFilter->count());
-
 });
 
 it('can get time table by intake', function () {

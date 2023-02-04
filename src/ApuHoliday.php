@@ -2,7 +2,6 @@
 
 namespace Chengkangzai\ApuSchedule;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 

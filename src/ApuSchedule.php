@@ -52,7 +52,7 @@ class ApuSchedule
         return self::get()
             ->where('INTAKE', $intake)
             ->where('GROUPING', $grouping)
-            ->when($ignore, fn($schedule) => $schedule->whereNotIn('MODID', $ignore));
+            ->when($ignore, fn ($schedule) => $schedule->whereNotIn('MODID', $ignore));
     }
 
     public static function get(): Collection
