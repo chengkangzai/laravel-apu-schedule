@@ -11,22 +11,33 @@ class ApuSchedule
 
     public static function getIntakes(): Collection
     {
-        return self::get()->pluck('INTAKE')->unique()->sort();
+        return self::get()
+            ->pluck('INTAKE')
+            ->unique()
+            ->sort();
     }
 
     public static function getGroupings($intake): Collection
     {
-        return self::get()->where('INTAKE', $intake)->sort()->pluck('GROUPING')->unique();
+        return self::get()
+            ->where('INTAKE', $intake)
+            ->sort()
+            ->pluck('GROUPING')
+            ->unique();
     }
 
     public static function getMODID($intake, $grouping): Collection
     {
-        return self::get()->where('INTAKE', $intake)->where('GROUPING', $grouping)->pluck('MODID');
+        return self::get()
+            ->where('INTAKE', $intake)
+            ->where('GROUPING', $grouping)
+            ->pluck('MODID');
     }
 
     public static function getByIntake($intake): Collection
     {
-        return self::get()->where('INTAKE', $intake);
+        return self::get()
+            ->where('INTAKE', $intake);
     }
 
     /*
@@ -41,7 +52,7 @@ class ApuSchedule
         return self::get()
             ->where('INTAKE', $intake)
             ->where('GROUPING', $grouping)
-            ->filter(fn ($schedule) => ! in_array($schedule->MODID, $ignore));
+            ->when($ignore, fn ($schedule) => $schedule->whereNotIn('MODID', $ignore));
     }
 
     public static function get(): Collection
