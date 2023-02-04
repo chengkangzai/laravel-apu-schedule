@@ -74,6 +74,37 @@ ApuSchedule::getSchedule("UC3F2111SE","G1");
 
 </details>
 
+## Get all official apu holiday
+
+```php
+use Chengkangzai\ApuSchedule\ApuHoliday; 
+
+ApuHoliday::getAll(); // return collection of holiday
+```
+
+## Get official apu holiday by year
+
+```php
+use Chengkangzai\ApuSchedule\ApuHoliday; 
+
+ApuHoliday::getByYear(2023); // return collection of holiday
+```
+
+
+<details><summary>Example Output of Holiday Object</summary>
+
+```php
+[
+    "holiday_description" => "New Year's Day",
+    "holiday_end_date" => "Sat, 01 Jan 2022 00:00:00 GMT",
+    "holiday_name" => "New Year's Day",
+    "holiday_people_affected" => "all",
+    "holiday_start_date" => "Sat, 01 Jan 2022 00:00:00 GMT",
+    "id" => 336,
+]
+```
+</details>
+
 ## Testing
 
 ```bash
