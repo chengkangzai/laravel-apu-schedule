@@ -64,14 +64,16 @@ jobs:
 
       - name: Temporarily modify composer.json
         run: |
-          # Create a temporary composer.json that will be used just for this test run
-          # This prevents permanent modifications to the actual composer.json file
+          # Make a backup of the original composer.json
           cp composer.json composer.json.bak
 
-          # Update dependencies to match matrix requirements
-          composer config --no-plugins --no-scripts require-dev.phpunit/phpunit "${{ matrix.phpunit }}"
-          composer config --no-plugins --no-scripts require-dev.pestphp/pest "${{ matrix.pest }}"
-          composer config --no-plugins --no-scripts require-dev.nunomaduro/collision "${{ matrix.collision }}"
+          # Use jq to modify the JSON directly
+          jq '.["require-dev"]["phpunit/phpunit"] = "${{ matrix.phpunit }}" |
+              .["require-dev"]["pestphp/pest"] = "${{ matrix.pest }}" |
+              .["require-dev"]["nunomaduro/collision"] = "${{ matrix.collision }}"' composer.json > composer.json.tmp
+
+          mv composer.json.tmp composer.json
+        shell: bash
 
       - name: Install dependencies
         run: |
