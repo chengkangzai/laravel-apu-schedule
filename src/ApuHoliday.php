@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApuHoliday
 {
-    public const baseUrl = 'https://api.apiit.edu.my/transix-v2/holiday/active';
+    public const BASE_URL = 'https://api.apiit.edu.my/transix-v2/holiday/active';
 
     private const CACHE_KEY = 'apu_holidays_data';
     private const CACHE_TTL = 24 * 60 * 60; // 24 hours
@@ -18,7 +18,7 @@ class ApuHoliday
         return Cache::remember(
             key: self::CACHE_KEY,
             ttl: self::CACHE_TTL,
-            callback: fn() => Http::get(self::baseUrl)->collect()
+            callback: fn() => Http::get(self::BASE_URL)->collect()
         );
     }
 

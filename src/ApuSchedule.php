@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApuSchedule
 {
-    public const baseUrl = 'https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable';
+    public const BASE_URL = 'https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable';
 
     private const CACHE_KEY = 'apu_schedule_data';
     private const CACHE_TTL = 24 * 60 * 60; // 24 hours
@@ -64,7 +64,7 @@ class ApuSchedule
         return Cache::remember(
             key: self::CACHE_KEY,
             ttl: self::CACHE_TTL,
-            callback: fn() => Http::get(self::baseUrl)->collect()
+            callback: fn() => Http::get(self::BASE_URL)->collect()
         );
     }
 
