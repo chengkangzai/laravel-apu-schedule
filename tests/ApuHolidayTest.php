@@ -1,8 +1,10 @@
 <?php
 
 use Chengkangzai\ApuSchedule\ApuHoliday;
+use Chengkangzai\ApuSchedule\Data\HolidayData;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Spatie\LaravelData\DataCollection;
 
 beforeEach(function () {
     // Clear cache before each test to ensure clean state
@@ -33,15 +35,17 @@ it('can retrieve holidays filtered by specific year', function () {
     $year = $raw->first()['year'];
     $collection = ApuHoliday::getByYear($year);
 
-    expect($collection)->toBeCollection()
-        ->and($collection)->not->toBeEmpty();
+    expect($collection)->toBeInstanceOf(DataCollection::class)
+        ->and($collection)->not->toBeEmpty()
+        ->and($collection->first())->toBeInstanceOf(HolidayData::class);
 });
 
 it('can retrieve all holidays from all years', function () {
     $collection = ApuHoliday::getAll();
 
-    expect($collection)->toBeCollection()
-        ->and($collection)->not->toBeEmpty();
+    expect($collection)->toBeInstanceOf(DataCollection::class)
+        ->and($collection)->not->toBeEmpty()
+        ->and($collection->first())->toBeInstanceOf(HolidayData::class);
 });
 
 it('can successfully clear the holiday cache', function () {
