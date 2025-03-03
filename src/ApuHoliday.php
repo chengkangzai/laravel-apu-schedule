@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApuHoliday
 {
-    public const baseUrl = 'https://2o7wc015dc.execute-api.ap-southeast-1.amazonaws.com/dev/v2/transix/holiday/active';
+    public const baseUrl = 'https://api.apiit.edu.my/transix-v2/holiday/active';
 
     public static function getRaw(): Collection
     {
