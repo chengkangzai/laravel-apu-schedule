@@ -19,7 +19,7 @@ class ApuHoliday
         return Cache::remember(
             key: self::CACHE_KEY,
             ttl: self::CACHE_TTL,
-            callback: fn() => Http::get(self::BASE_URL)->collect()
+            callback: fn () => Http::get(self::BASE_URL)->collect()
         );
     }
 

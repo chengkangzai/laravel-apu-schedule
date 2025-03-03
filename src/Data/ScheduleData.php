@@ -3,7 +3,6 @@
 namespace Chengkangzai\ApuSchedule\Data;
 
 use Spatie\LaravelData\Data;
-use Carbon\Carbon;
 
 class ScheduleData extends Data
 {

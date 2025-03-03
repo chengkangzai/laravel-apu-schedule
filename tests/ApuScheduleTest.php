@@ -18,7 +18,7 @@ beforeEach(function () {
         ApuSchedule::BASE_URL => Http::response(
             json_decode($sampleData, true),
             200
-        )
+        ),
     ]);
 });
 
@@ -124,8 +124,8 @@ it('caches schedule data to avoid unnecessary S3 requests', function () {
     // Reset the fake with different data to ensure we're using the cache
     Http::fake([
         ApuSchedule::BASE_URL => Http::response([
-            ['INTAKE' => 'FAKE_INTAKE', 'GROUPING' => 'FAKE_GROUP', 'MODID' => 'FAKE_MOD']
-        ], 200)
+            ['INTAKE' => 'FAKE_INTAKE', 'GROUPING' => 'FAKE_GROUP', 'MODID' => 'FAKE_MOD'],
+        ], 200),
     ]);
 
     // Second call should use cache, not the new fake data

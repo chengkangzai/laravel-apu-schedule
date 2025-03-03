@@ -24,7 +24,7 @@ class ApuSchedule
         return Cache::remember(
             key: self::CACHE_KEY,
             ttl: self::CACHE_TTL,
-            callback: fn() => Http::get(self::BASE_URL)->collect()
+            callback: fn () => Http::get(self::BASE_URL)->collect()
         );
     }
 
@@ -41,6 +41,7 @@ class ApuSchedule
         return $rawData->map(function ($item, $key) {
             // Add the key as the ID if needed
             $item['id'] = $key;
+
             return ScheduleData::fromArray($item);
         });
     }
@@ -116,7 +117,7 @@ class ApuSchedule
         $schedules = self::get()
             ->where('INTAKE', $intake)
             ->where('GROUPING', $grouping)
-            ->when($ignore, fn($schedule) => $schedule->whereNotIn('MODID', $ignore))
+            ->when($ignore, fn ($schedule) => $schedule->whereNotIn('MODID', $ignore))
             ->values();
 
         return new DataCollection(ScheduleData::class, $schedules);

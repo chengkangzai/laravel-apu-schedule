@@ -18,7 +18,7 @@ beforeEach(function () {
         ApuHoliday::BASE_URL => Http::response(
             json_decode($sampleData, true),
             200
-        )
+        ),
     ]);
 });
 
@@ -75,8 +75,8 @@ it('caches holiday data to avoid unnecessary API calls', function () {
     // Reset the fake with different data to ensure we're using the cache
     Http::fake([
         ApuHoliday::BASE_URL => Http::response([
-            ['year' => 9999, 'holidays' => [['name' => 'Should not reach this']]]
-        ], 200)
+            ['year' => 9999, 'holidays' => [['name' => 'Should not reach this']]],
+        ], 200),
     ]);
 
     // Second call should use cache, not the new fake data
