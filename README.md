@@ -1,50 +1,57 @@
-# This is my package laravel-apu-schedule
+# Laravel APU Schedule
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/chengkangzai/laravel-apu-schedule.svg?style=flat-square)](https://packagist.org/packages/chengkangzai/laravel-apu-schedule)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/chengkangzai/laravel-apu-schedule/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/chengkangzai/laravel-apu-schedule/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/chengkangzai/laravel-apu-schedule/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/chengkangzai/laravel-apu-schedule/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/chengkangzai/laravel-apu-schedule.svg?style=flat-square)](https://packagist.org/packages/chengkangzai/laravel-apu-schedule)
 
-![Package Banners](https://banners.beyondco.de/Laravel%20Apu%20Schedule.png?theme=light&packageManager=composer+require&packageName=chengkangzai%2Flaravel-apu-schedule&pattern=ticTacToe&style=style_1&description=query+student%27s+timetable+from+APU&md=1&showWatermark=1&fontSize=100px&images=academic-cap)
+![Package Banner](https://banners.beyondco.de/Laravel%20Apu%20Schedule.png?theme=light&packageManager=composer+require&packageName=chengkangzai%2Flaravel-apu-schedule&pattern=ticTacToe&style=style_1&description=query+student%27s+timetable+from+APU&md=1&showWatermark=1&fontSize=100px&images=academic-cap)
 
-This package provide simple API to get all and query the student's timetable information from [Asia Pacific University(APU)](https://apu.edu.my/).
+A Laravel package that provides a simple API to retrieve and query student timetable information from [Asia Pacific University (APU)](https://apu.edu.my/).
 
-## Installation
+## 📋 Features
 
-You can install the package via composer:
+- Retrieve all available intake codes
+- Get groupings for a specific intake
+- Query timetable schedules by intake and grouping
+- Access official APU holidays
+
+## 🚀 Installation
+
+You can install the package via Composer:
 
 ```bash
 composer require chengkangzai/laravel-apu-schedule
 ```
 
-## Usage
+## 📖 Usage
 
-## Get all the intake code
-
-```php
-use Chengkangzai\ApuSchedule\ApuSchedule;
-
-$intakes = ApuSchedule::getIntakes(); // UC3F2111SE, AFCF2011AS ... 
-```
-
-## Get all the grouping by intake code
+### Get all intake codes
 
 ```php
 use Chengkangzai\ApuSchedule\ApuSchedule;
 
-ApuSchedule::getGroupings("UC3F2111SE"); // G1,G2,G3
+$intakes = ApuSchedule::getIntakes(); // Returns: UC3F2111SE, AFCF2011AS ...
 ```
 
-## Get schedule of specific intake and grouping
+### Get all groupings for a specific intake code
 
 ```php
 use Chengkangzai\ApuSchedule\ApuSchedule;
 
-ApuSchedule::getSchedule("UC3F2111SE","G1"); 
-
+$groupings = ApuSchedule::getGroupings("UC3F2111SE"); // Returns: G1, G2, G3 ...
 ```
 
-<details><summary>Example Output</summary>
+### Get schedule for a specific intake and grouping
+
+```php
+use Chengkangzai\ApuSchedule\ApuSchedule;
+
+$schedule = ApuSchedule::getSchedule("UC3F2111SE", "G1");
+```
+
+<details>
+<summary>Example schedule output</summary>
 
 ```json
 [
@@ -71,27 +78,26 @@ ApuSchedule::getSchedule("UC3F2111SE","G1");
     {}
 ]
 ```
-
 </details>
 
-## Get all official apu holiday
+### Get all official APU holidays
 
 ```php
-use Chengkangzai\ApuSchedule\ApuHoliday; 
+use Chengkangzai\ApuSchedule\ApuHoliday;
 
-ApuHoliday::getAll(); // return collection of holiday
+$allHolidays = ApuHoliday::getAll(); // Returns a collection of holidays
 ```
 
-## Get official apu holiday by year
+### Get official APU holidays for a specific year
 
 ```php
-use Chengkangzai\ApuSchedule\ApuHoliday; 
+use Chengkangzai\ApuSchedule\ApuHoliday;
 
-ApuHoliday::getByYear(2023); // return collection of holiday
+$holidaysFor2023 = ApuHoliday::getByYear(2023); // Returns holidays for 2023
 ```
 
-
-<details><summary>Example Output of Holiday Object</summary>
+<details>
+<summary>Example holiday object structure</summary>
 
 ```php
 [
@@ -105,29 +111,29 @@ ApuHoliday::getByYear(2023); // return collection of holiday
 ```
 </details>
 
-## Testing
+## 🧪 Testing
 
 ```bash
 composer test
 ```
 
-## Changelog
+## 📝 Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see the [CHANGELOG](CHANGELOG.md) file for details on what has changed recently.
 
-## Contributing
+## 🤝 Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+Contributions are welcome! Please see the [CONTRIBUTING](.github/CONTRIBUTING.md) guide for details.
 
-## Security Vulnerabilities
+## 🔒 Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+If you discover a security vulnerability, please review [our security policy](../../security/policy) for instructions on how to report it.
 
-## Credits
+## ✨ Credits
 
 - [chengkangzai](https://github.com/chengkangzai)
 - [All Contributors](../../contributors)
 
-## License
+## 📄 License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This package is open-sourced software licensed under the [MIT License](LICENSE.md).
