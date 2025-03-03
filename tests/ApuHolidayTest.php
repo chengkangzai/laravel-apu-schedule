@@ -4,7 +4,23 @@ use Chengkangzai\ApuSchedule\ApuHoliday;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-it('can get raw holiday data from API', function () {
+beforeEach(function () {
+    // Clear cache before each test to ensure clean state
+    Cache::forget('apu_holidays_data');
+
+    // Read the sample data from holidays.json
+    $sampleData = file_get_contents(__DIR__ . '/../sample_requests/holidays.json');
+
+    // Mock the HTTP response with sample data
+    Http::fake([
+        ApuHoliday::BASE_URL => Http::response(
+            json_decode($sampleData, true),
+            200
+        )
+    ]);
+});
+
+it('can fetch raw holiday data from API', function () {
     $collection = ApuHoliday::getRaw();
 
     expect($collection)->toBeCollection()
@@ -44,16 +60,6 @@ it('can successfully clear the holiday cache', function () {
 });
 
 it('caches holiday data to avoid unnecessary API calls', function () {
-    // Mock the HTTP call
-    Http::fake([
-        ApuHoliday::BASE_URL => Http::response([
-            ['year' => 2023, 'holidays' => [['name' => 'Test Holiday']]]
-        ], 200)
-    ]);
-
-    // Clear any existing cache
-    Cache::forget('apu_holidays_data');
-
     // First call should make an HTTP request
     $firstResult = ApuHoliday::getRaw();
 
@@ -62,19 +68,19 @@ it('caches holiday data to avoid unnecessary API calls', function () {
         return $request->url() === ApuHoliday::BASE_URL;
     });
 
-    // Reset the request count
+    // Reset the fake with different data to ensure we're using the cache
     Http::fake([
         ApuHoliday::BASE_URL => Http::response([
-            ['year' => 2023, 'holidays' => [['name' => 'Test Holiday']]]
+            ['year' => 9999, 'holidays' => [['name' => 'Should not reach this']]]
         ], 200)
     ]);
 
-    // Second call should use cache
+    // Second call should use cache, not the new fake data
     $secondResult = ApuHoliday::getRaw();
 
     // Verify no new HTTP request was made
     Http::assertNothingSent();
 
-    // Results should be the same
+    // Results should be the same as first call
     expect($secondResult)->toEqual($firstResult);
 });
