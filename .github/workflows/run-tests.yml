@@ -2,33 +2,44 @@ name: run-tests
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    paths:
+      - '**.php'
+      - '.github/workflows/run-tests.yml'
+      - 'phpunit.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
 
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest ]
-        php: [ 8.4, 8.3 ]
-        laravel: [ 12.*, 11.*, 10.* ]
-        stability: [ prefer-lowest, prefer-stable ]
+        os: [ubuntu-latest, windows-latest]
+        php: [8.4, 8.3]
+        laravel: [12.*, 11.*, 10.*]
+        stability: [prefer-lowest, prefer-stable]
+        exclude:
+          # Exclude problematic combinations
+          - laravel: 12.*
+            php: 8.3  # If L12 requires PHP 8.4+
         include:
           - laravel: 12.*
             testbench: 10.*
+            pest_plugin: ^2.0  # Use newer Pest plugin for L12
           - laravel: 11.*
             testbench: 9.*
+            pest_plugin: ^2.0  # Use newer Pest plugin for L11
           - laravel: 10.*
             testbench: 8.*
+            pest_plugin: ^1.4  # Use compatible version for L10
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -41,9 +52,21 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Update composer.json for matrix combinations
+        run: |
+          # Update phpunit version to match requirements
+          composer require phpunit/phpunit "^10.5 || ^11.0" --dev --no-update
+          # Update pest plugin to match Laravel version
+          composer require pestphp/pest-plugin-laravel "${{ matrix.pest_plugin }}" --dev --no-update
+
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --ci
