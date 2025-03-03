@@ -18,22 +18,31 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         php: [8.4, 8.3]
-        laravel: [12.*, 11.*, 10.*]
         stability: [prefer-lowest, prefer-stable]
-        exclude:
-          # Exclude problematic combinations
-          - laravel: 12.*
-            php: 8.3  # If L12 requires PHP 8.4+
         include:
+          # Laravel 12 configuration
           - laravel: 12.*
             testbench: 10.*
-            pest_plugin: ^2.0  # Use newer Pest plugin for L12
+            pest: 2.*
+            phpunit: ^11.0
+            collision: ^8.1
+            php: 8.4
+
+          # Laravel 11 configuration
           - laravel: 11.*
             testbench: 9.*
-            pest_plugin: ^2.0  # Use newer Pest plugin for L11
+            pest: 2.*
+            phpunit: ^10.5
+            collision: ^7.0
+            php: 8.3
+
+          # Laravel 10 configuration
           - laravel: 10.*
             testbench: 8.*
-            pest_plugin: ^1.4  # Use compatible version for L10
+            pest: 2.*
+            phpunit: ^10.0
+            collision: ^7.0
+            php: 8.3
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -53,16 +62,20 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Update composer.json for matrix combinations
+      - name: Temporarily modify composer.json
         run: |
-          # Update phpunit version to match requirements
-          composer require phpunit/phpunit "^10.5 || ^11.0" --dev --no-update
-          # Update pest plugin to match Laravel version
-          composer require pestphp/pest-plugin-laravel "${{ matrix.pest_plugin }}" --dev --no-update
+          # Create a temporary composer.json that will be used just for this test run
+          # This prevents permanent modifications to the actual composer.json file
+          cp composer.json composer.json.bak
+
+          # Update dependencies to match matrix requirements
+          composer config --no-plugins --no-scripts require-dev.phpunit/phpunit "${{ matrix.phpunit }}"
+          composer config --no-plugins --no-scripts require-dev.pestphp/pest "${{ matrix.pest }}"
+          composer config --no-plugins --no-scripts require-dev.nunomaduro/collision "${{ matrix.collision }}"
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
@@ -70,3 +83,7 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --ci
+
+      - name: Restore composer.json
+        if: always()
+        run: mv composer.json.bak composer.json
