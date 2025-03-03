@@ -90,6 +90,21 @@ class ApuSchedule
     }
 
     /**
+     * Get module IDs for a specific intake and grouping
+     *
+     * @param string $intake
+     * @param string $grouping
+     * @return Collection
+     */
+    public static function getMODIDWithName(string $intake, string $grouping): Collection
+    {
+        return self::get()
+            ->where('INTAKE', $intake)
+            ->where('GROUPING', $grouping)
+            ->mapWithKeys(fn (ScheduleData $schedule) => [$schedule->MODID => $schedule->MODULE_NAME.' ('.$schedule->NAME.')']);
+    }
+
+    /**
      * Get schedule data for a specific intake
      *
      * @param string $intake
