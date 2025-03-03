@@ -101,7 +101,7 @@ class ApuSchedule
         return self::get()
             ->where('INTAKE', $intake)
             ->where('GROUPING', $grouping)
-            ->mapWithKeys(fn(ScheduleData $schedule) => [$schedule->MODID => $schedule->MODULE_NAME.' ('.$schedule->NAME.')']);
+            ->mapWithKeys(fn (ScheduleData $schedule) => [$schedule->MODID => $schedule->MODULE_NAME.' ('.$schedule->NAME.')']);
     }
 
     /**
