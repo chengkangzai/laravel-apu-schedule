@@ -3,11 +3,15 @@
 namespace Chengkangzai\ApuSchedule;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class ApuSchedule
 {
     public const baseUrl = 'https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable';
+
+    private const CACHE_KEY = 'apu_schedule_data';
+    private const CACHE_TTL = 24 * 60 * 60; // 24 hours
 
     public static function getIntakes(): Collection
     {
@@ -57,6 +61,20 @@ class ApuSchedule
 
     public static function get(): Collection
     {
-        return collect(json_decode(Http::get(self::baseUrl)));
+        return Cache::remember(
+            key: self::CACHE_KEY,
+            ttl: self::CACHE_TTL,
+            callback: fn() => Http::get(self::baseUrl)->collect()
+        );
+    }
+
+    /**
+     * Clear the schedule cache
+     *
+     * @return bool
+     */
+    public static function clearCache(): bool
+    {
+        return Cache::forget(self::CACHE_KEY);
     }
 }
